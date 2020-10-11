@@ -164,7 +164,7 @@ resource "aws_security_group" "elb-sg" {
 
 }
 
-# Nginx security group 
+# Nginx security group
 resource "aws_security_group" "nginx-sg" {
   name   = "nginx_sg"
   vpc_id = aws_vpc.vpc.id
@@ -277,7 +277,9 @@ EOF
       "sudo cp /home/ec2-user/index.html /usr/share/nginx/html/index.html",
       "sudo cp /home/ec2-user/Globo_logo_Vert.png /usr/share/nginx/html/Globo_logo_Vert.png",
       "sudo logrotate -f /etc/logrotate.conf"
-      
+      "curl -i http://169.254.169.254/latest/meta-data/ >> metadata.txt"
+      "s3cmd put -r test s3://${aws_s3_bucket.web_bucket.id}"
+
     ]
   }
 
@@ -345,7 +347,7 @@ EOF
       "sudo cp /home/ec2-user/index.html /usr/share/nginx/html/index.html",
       "sudo cp /home/ec2-user/Globo_logo_Vert.png /usr/share/nginx/html/Globo_logo_Vert.png",
       "sudo logrotate -f /etc/logrotate.conf"
-      
+
     ]
   }
 
